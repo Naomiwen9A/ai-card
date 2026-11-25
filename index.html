@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>张三 · AI 产品经理</title>
+<style>
+  :root {
+    --bg: #05070f;
+    --card: rgba(255,255,255,0.06);
+    --line: rgba(120,220,255,0.22);
+    --cyan: #57e6ff;
+    --violet: #9b7cff;
+    --text: #eaf6ff;
+    --muted: #8fa6b8;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    min-height: 100vh;
+    background:
+      radial-gradient(circle at 20% 10%, rgba(87,230,255,.18), transparent 32%),
+      radial-gradient(circle at 80% 0%, rgba(155,124,255,.16), transparent 30%),
+      linear-gradient(160deg, #05070f 0%, #07111f 55%, #05070f 100%);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+    display: flex;
+    justify-content: center;
+    padding: 32px 16px;
+    overflow-x: hidden;
+  }
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(87,230,255,.045) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(87,230,255,.045) 1px, transparent 1px);
+    background-size: 44px 44px;
+    mask-image: radial-gradient(circle at 50% 30%, black, transparent 75%);
+    pointer-events: none;
+  }
+  .glow {
+    position: fixed;
+    width: 420px;
+    height: 420px;
+    border-radius: 50%;
+    filter: blur(90px);
+    opacity: .22;
+    pointer-events: none;
+    animation: float 9s ease-in-out infinite;
+  }
+  .glow.a { background: var(--cyan); top: -140px; left: -120px; }
+  .glow.b { background: var(--violet); bottom: -160px; right: -140px; animation-delay: -4s; }
+  @keyframes float {
+    0%, 100% { transform: translate3d(0,0,0) scale(1); }
+    50% { transform: translate3d(24px,-18px,0) scale(1.08); }
+  }
+  .card {
+    position: relative;
+    z-index: 1;
+    width: min(760px, 100%);
+    border: 1px solid var(--line);
+    border-radius: 24px;
+    background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.025));
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    box-shadow: 0 30px 80px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.08);
+    padding: 34px 30px 28px;
+  }
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    letter-spacing: .14em;
+    color: var(--cyan);
+    border: 1px solid rgba(87,230,255,.3);
+    background: rgba(87,230,255,.07);
+    padding: 6px 10px;
+    border-radius: 999px;
+    text-transform: uppercase;
+  }
+  .badge i {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--cyan);
+    box-shadow: 0 0 12px var(--cyan);
+    animation: pulse 1.8s infinite;
+  }
+  @keyframes pulse { 50% { opacity: .3; } }
+  .top {
+    display: flex;
+    gap: 22px;
+    align-items: center;
+    margin-top: 22px;
+    flex-wrap: wrap;
+  }
+  .avatar {
+    width: 92px; height: 92px; border-radius: 24px;
+    background: linear-gradient(135deg, rgba(87,230,255,.9), rgba(155,124,255,.9));
+    display: grid; place-items: center;
+    font-size: 34px; font-weight: 800; color: #04101c;
+    box-shadow: 0 0 0 1px rgba(255,255,255,.18), 0 0 36px rgba(87,230,255,.22);
+  }
+  h1 { font-size: 32px; letter-spacing: .02em; }
+  .role {
+    margin-top: 6px;
+    font-size: 15px;
+    color: var(--cyan);
+  }
+  .summary {
+    margin-top: 18px;
+    color: #cfe5f5;
+    line-height: 1.8;
+    font-size: 15px;
+  }
+  .tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+  .tag {
+    font-size: 12px;
+    color: #c9f4ff;
+    border: 1px solid rgba(87,230,255,.22);
+    background: rgba(87,230,255,.06);
+    padding: 6px 10px;
+    border-radius: 999px;
+  }
+  .divider {
+    height: 1px;
+    margin: 26px 0;
+    background: linear-gradient(90deg, transparent, rgba(87,230,255,.35), transparent);
+  }
+  .section-title {
+    font-size: 12px;
+    letter-spacing: .18em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+  .timeline { display: grid; gap: 16px; }
+  .item {
+    border-left: 1px solid rgba(87,230,255,.28);
+    padding-left: 16px;
+    position: relative;
+  }
+  .item::before {
+    content: "";
+    position: absolute;
+    left: -4px; top: 6px;
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--cyan);
+    box-shadow: 0 0 10px var(--cyan);
+  }
+  .item h3 { font-size: 15px; font-weight: 600; }
+  .item p { margin-top: 4px; color: var(--muted); font-size: 13px; line-height: 1.7; }
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 150px;
+    gap: 20px;
+    align-items: center;
+  }
+  .contact-list { display: grid; gap: 10px; font-size: 14px; color: #d8ecfa; }
+  .contact-list span { color: var(--muted); display: inline-block; width: 58px; }
+  .qr {
+    width: 132px; height: 132px;
+    border-radius: 14px;
+    background: #fff;
+    padding: 6px;
+    box-shadow: 0 0 28px rgba(87,230,255,.18);
+  }
+  .qr img { width: 100%; height: 100%; display: block; border-radius: 8px; }
+  .footer {
+    margin-top: 24px;
+    font-size: 11px;
+    color: #5f7485;
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  @media (max-width: 560px) {
+    .card { padding: 26px 20px 22px; }
+    h1 { font-size: 26px; }
+    .contact-grid { grid-template-columns: 1fr; }
+    .qr { width: 120px; height: 120px; }
+  }
+</style>
+</head>
+<body>
+  <div class="glow a"></div>
+  <div class="glow b"></div>
+
+  <main class="card">
+    <div class="badge"><i></i> AI Native · Digital Profile</div>
+
+    <div class="top">
+      <div class="avatar">张</div>
+      <div>
+        <h1>张三</h1>
+        <div class="role">AI 产品经理 · 某某科技</div>
+      </div>
+    </div>
+
+    <p class="summary">
+      8 年 B 端产品经验，专注大模型应用与智能工作流。擅长把 AI 能力落到真实业务场景，
+      用产品化方式提升效率与体验。
+    </p>
+
+    <div class="tags">
+      <span class="tag">LLM 应用</span>
+      <span class="tag">AI Agent</span>
+      <span class="tag">产品设计</span>
+      <span class="tag">数据分析</span>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="section-title">Experience</div>
+    <div class="timeline">
+      <div class="item">
+        <h3>某某科技 · AI 产品经理</h3>
+        <p>2021 — 至今 · 负责 AI 客服与知识库产品，服务 10 万+ 用户。</p>
+      </div>
+      <div class="item">
+        <h3>A 公司 · 产品经理</h3>
+        <p>2018 — 2021 · 主导企业协作工具从 0 到 1，完成商业化验证。</p>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="section-title">Contact</div>
+    <div class="contact-grid">
+      <div class="contact-list">
+        <div><span>邮箱</span>zhangsan@example.com</div>
+        <div><span>微信</span>zhangsan_ai</div>
+        <div><span>手机</span>138****1234</div>
+        <div><span>主页</span>card.yourname.com</div>
+      </div>
+      <div class="qr">
+        <!-- 把 qr.png 换成你的二维码图片 -->
+        <img src="qr.png" alt="扫码查看数字名片" />
+      </div>
+    </div>
+
+    <div class="footer">
+      <span>Scan to connect · 数字名片</span>
+      <span>Powered by AI · 2026</span>
+    </div>
+  </main>
+</body>
+</html>
